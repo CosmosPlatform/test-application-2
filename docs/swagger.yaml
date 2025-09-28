@@ -1,13 +1,61 @@
 definitions:
-  models.HealthResponse:
+  api.ErrorResponse:
+    properties:
+      code:
+        example: ORDER_NOT_FOUND
+        type: string
+      error:
+        example: Order not found
+        type: string
+      message:
+        example: The requested order could not be found
+        type: string
+    type: object
+  api.HealthResponse:
     properties:
       status:
         example: ok
         type: string
     type: object
+  api.Order:
+    properties:
+      created_at:
+        example: "2023-01-01T00:00:00Z"
+        type: string
+      customer_id:
+        example: customer-456
+        type: string
+      id:
+        example: order-123
+        type: string
+      price:
+        example: 29.99
+        type: number
+      product_name:
+        example: Premium Widget
+        type: string
+      quantity:
+        example: 2
+        type: integer
+      status:
+        example: pending
+        type: string
+      total:
+        example: 59.98
+        type: number
+      updated_at:
+        example: "2023-01-01T00:00:00Z"
+        type: string
+    type: object
+  api.OrderUpdateRequest:
+    properties:
+      status:
+        example: paid
+        type: string
+    type: object
 info:
   contact: {}
-  title: Base application API
+  title: Order service API
 paths:
   /health:
     get:
@@ -20,8 +68,67 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.HealthResponse'
+            $ref: '#/definitions/api.HealthResponse'
       summary: Health Check
       tags:
       - Health
+  /orders/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Fetch order details before charging
+      parameters:
+      - description: Order ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Order'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+      summary: Get Order
+      tags:
+      - Orders
+    put:
+      consumes:
+      - application/json
+      description: Mark order as paid after successful charge
+      parameters:
+      - description: Order ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Order update data
+        in: body
+        name: order
+        required: true
+        schema:
+          $ref: '#/definitions/api.OrderUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Order'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+      summary: Update Order
+      tags:
+      - Orders
 swagger: "2.0"

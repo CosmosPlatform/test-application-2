@@ -32,7 +32,96 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.HealthResponse"
+                            "$ref": "#/definitions/api.HealthResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/orders/{id}": {
+            "get": {
+                "description": "Fetch order details before charging",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Get Order",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Order ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.Order"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/api.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Mark order as paid after successful charge",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Update Order",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Order ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Order update data",
+                        "name": "order",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/api.OrderUpdateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.Order"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/api.ErrorResponse"
                         }
                     }
                 }
@@ -40,12 +129,79 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "models.HealthResponse": {
+        "api.ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string",
+                    "example": "ORDER_NOT_FOUND"
+                },
+                "error": {
+                    "type": "string",
+                    "example": "Order not found"
+                },
+                "message": {
+                    "type": "string",
+                    "example": "The requested order could not be found"
+                }
+            }
+        },
+        "api.HealthResponse": {
             "type": "object",
             "properties": {
                 "status": {
                     "type": "string",
                     "example": "ok"
+                }
+            }
+        },
+        "api.Order": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string",
+                    "example": "2023-01-01T00:00:00Z"
+                },
+                "customer_id": {
+                    "type": "string",
+                    "example": "customer-456"
+                },
+                "id": {
+                    "type": "string",
+                    "example": "order-123"
+                },
+                "price": {
+                    "type": "number",
+                    "example": 29.99
+                },
+                "product_name": {
+                    "type": "string",
+                    "example": "Premium Widget"
+                },
+                "quantity": {
+                    "type": "integer",
+                    "example": 2
+                },
+                "status": {
+                    "type": "string",
+                    "example": "pending"
+                },
+                "total": {
+                    "type": "number",
+                    "example": 59.98
+                },
+                "updated_at": {
+                    "type": "string",
+                    "example": "2023-01-01T00:00:00Z"
+                }
+            }
+        },
+        "api.OrderUpdateRequest": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "example": "paid"
                 }
             }
         }
@@ -58,7 +214,7 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "",
 	BasePath:         "",
 	Schemes:          []string{},
-	Title:            "Base application API",
+	Title:            "Order service API",
 	Description:      "",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
