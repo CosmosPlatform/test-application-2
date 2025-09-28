@@ -1,0 +1,53 @@
+{
+  "dependencies": {
+    "user-service": {
+      "reasons": [
+        "Get user information for shipping and billing"
+      ],
+      "endpoints": {
+        "/users/{id}": {
+          "get": {
+            "reasons": [
+              "Retrieve user details for order"
+            ]
+          }
+        }
+      }
+    },
+    "product-service": {
+      "reasons": [
+        "Fetch product data for ordered items"
+      ],
+      "endpoints": {
+        "/products/{id}": {
+          "get": {
+            "reasons": [
+              "Retrieve product name and price"
+            ]
+          }
+        }
+      }
+    },
+    "inventory-service": {
+      "reasons": [
+        "Reserve and release stock for orders"
+      ],
+      "endpoints": {
+        "/inventory/reserve": {
+          "post": {
+            "reasons": [
+              "Reserve stock when order is placed"
+            ]
+          }
+        },
+        "/inventory/release": {
+          "post": {
+            "reasons": [
+              "Release stock when order is canceled"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
