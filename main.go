@@ -6,6 +6,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+
+// @title Base application API
 func main() {
 	router := gin.Default()
 	baseGroup := router.Group("/")
