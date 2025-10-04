@@ -47,6 +47,12 @@ definitions:
         example: "2023-01-01T00:00:00Z"
         type: string
     type: object
+  api.OrderUpdateRequest:
+    properties:
+      status:
+        example: paid
+        type: string
+    type: object
 info:
   contact: {}
   title: Order service API
@@ -89,6 +95,40 @@ paths:
           schema:
             $ref: '#/definitions/api.ErrorResponse'
       summary: Get Order
+      tags:
+      - Orders
+    put:
+      consumes:
+      - application/json
+      description: Mark order as paid after successful charge
+      parameters:
+      - description: Order ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Order update data
+        in: body
+        name: order
+        required: true
+        schema:
+          $ref: '#/definitions/api.OrderUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Order'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+      summary: Update Order
       tags:
       - Orders
 swagger: "2.0"
