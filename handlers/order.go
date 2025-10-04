@@ -38,7 +38,7 @@ func RegisterOrderRoutes(e *gin.RouterGroup) {
 	ordersGroup := e.Group("/orders")
 
 	ordersGroup.GET("/:id", getOrderHandler)
-	ordersGroup.PUT("/:id", updateOrderHandler)
+	//ordersGroup.PUT("/:id", updateOrderHandler)
 }
 
 // @Summary Get Order
