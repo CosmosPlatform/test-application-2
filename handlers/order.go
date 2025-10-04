@@ -38,7 +38,7 @@ func RegisterOrderRoutes(e *gin.RouterGroup) {
 	ordersGroup := e.Group("/orders")
 
 	ordersGroup.GET("/:id", getOrderHandler)
-	//ordersGroup.PUT("/:id", updateOrderHandler)
+	ordersGroup.PUT("/:id", updateOrderHandler)
 }
 
 // @Summary Get Order
@@ -77,7 +77,6 @@ func getOrderHandler(c *gin.Context) {
 // @Failure 400 {object} api.ErrorResponse
 // @Failure 404 {object} api.ErrorResponse
 // @Router /orders/{id} [put]
-/*
 func updateOrderHandler(c *gin.Context) {
 	orderID := c.Param("id")
 
@@ -107,4 +106,3 @@ func updateOrderHandler(c *gin.Context) {
 
 	c.JSON(http.StatusOK, order)
 }
-*/
