@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// @title Base application API
+// @title Review Service API
 func main() {
 	router := gin.Default()
 	baseGroup := router.Group("/")

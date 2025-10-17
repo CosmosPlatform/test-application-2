@@ -1,0 +1,32 @@
+{
+  "dependencies": {
+    "user-service": {
+      "reasons": [
+        "Verify reviewer identity"
+      ],
+      "endpoints": {
+        "/users/{id}": {
+          "get": {
+            "reasons": [
+              "Ensure user exists before allowing review"
+            ]
+          }
+        }
+      }
+    },
+    "product-service": {
+      "reasons": [
+        "Validate product being reviewed"
+      ],
+      "endpoints": {
+        "/products/{id}": {
+          "get": {
+            "reasons": [
+              "Verify product exists before accepting review"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
