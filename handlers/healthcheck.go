@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"application/models"
+	"application/api"
 
 	"github.com/gin-gonic/gin"
 )
@@ -17,10 +17,10 @@ func RegisterHealthCheckRoutes(e *gin.RouterGroup) {
 // @Tags Health
 // @Accept json
 // @Produce json
-// @Success 200 {object} models.HealthResponse
+// @Success 200 {object} api.HealthResponse
 // @Router /health [get]
 func healthCheckHandler(c *gin.Context) {
-	response := models.HealthResponse{
+	response := api.HealthResponse{
 		Status: "ok",
 	}
 	c.JSON(200, response)
