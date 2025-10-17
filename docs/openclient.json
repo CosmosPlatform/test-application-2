@@ -13,6 +13,20 @@
           }
         }
       }
+    },
+    "inventory-service": {
+      "reasons": [
+        "Manage user data"
+      ],
+      "endpoints": {
+        "/inventory/reserve": {
+          "post": {
+            "reasons": [
+              "Reserve inventory for a user"
+            ]
+          }
+        }
+      }
     }
   }
 }
