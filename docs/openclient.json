@@ -1,0 +1,32 @@
+{
+  "dependencies": {
+    "product-service": {
+      "reasons": [
+        "Get product price and name for cart items"
+      ],
+      "endpoints": {
+        "/products/{id}": {
+          "get": {
+            "reasons": [
+              "Retrieve product details for cart"
+            ]
+          }
+        }
+      }
+    },
+    "inventory-service": {
+      "reasons": [
+        "Check availability of items in the cart"
+      ],
+      "endpoints": {
+        "/inventory/{productId}": {
+          "get": {
+            "reasons": [
+              "Ensure item is in stock before checkout"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

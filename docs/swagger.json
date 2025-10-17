@@ -1,7 +1,7 @@
 {
     "swagger": "2.0",
     "info": {
-        "title": "Base application API",
+        "title": "Cart Service API",
         "contact": {}
     },
     "paths": {

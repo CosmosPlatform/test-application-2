@@ -7,7 +7,7 @@ definitions:
     type: object
 info:
   contact: {}
-  title: Base application API
+  title: Cart Service API
 paths:
   /health:
     get:
