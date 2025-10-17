@@ -5,6 +5,46 @@
         "contact": {}
     },
     "paths": {
+        "/events": {
+            "post": {
+                "description": "Track an inventory-related event (e.g., stock updates, audits, movements)",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Inventory"
+                ],
+                "summary": "Track Inventory Event",
+                "parameters": [
+                    {
+                        "description": "Inventory event data",
+                        "name": "event",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/api.InventoryEvent"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.InventoryEventResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/health": {
             "get": {
                 "description": "Returns the health status of the application",
@@ -27,15 +67,341 @@
                     }
                 }
             }
+        },
+        "/inventory/release": {
+            "post": {
+                "description": "Release reserved inventory back to available stock",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Inventory"
+                ],
+                "summary": "Release Inventory",
+                "parameters": [
+                    {
+                        "description": "Release inventory request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/api.ReleaseInventoryRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.InventoryResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/api.ErrorResponse"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/api.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/inventory/reserve": {
+            "post": {
+                "description": "Reserve inventory for an order",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Inventory"
+                ],
+                "summary": "Reserve Inventory",
+                "parameters": [
+                    {
+                        "description": "Reserve inventory request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/api.ReserveInventoryRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.InventoryResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/api.ErrorResponse"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/api.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/inventory/{productId}": {
+            "get": {
+                "description": "Fetch inventory details for a specific product",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Inventory"
+                ],
+                "summary": "Get Inventory",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Product ID",
+                        "name": "productId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.InventoryItem"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/api.ErrorResponse"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
+        "api.ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string",
+                    "example": "NOT_FOUND"
+                },
+                "error": {
+                    "type": "string",
+                    "example": "Element not found"
+                },
+                "message": {
+                    "type": "string",
+                    "example": "The requested element could not be found"
+                }
+            }
+        },
         "api.HealthResponse": {
             "type": "object",
             "properties": {
                 "status": {
                     "type": "string",
                     "example": "ok"
+                }
+            }
+        },
+        "api.InventoryEvent": {
+            "type": "object",
+            "required": [
+                "event_type"
+            ],
+            "properties": {
+                "event_type": {
+                    "type": "string",
+                    "example": "stock_update"
+                },
+                "product_id": {
+                    "type": "string",
+                    "example": "product-123"
+                },
+                "properties": {
+                    "type": "object",
+                    "additionalProperties": true
+                },
+                "quantity": {
+                    "type": "integer",
+                    "example": 10
+                },
+                "timestamp": {
+                    "type": "string",
+                    "example": "2023-01-01T00:00:00Z"
+                }
+            }
+        },
+        "api.InventoryEventResponse": {
+            "type": "object",
+            "properties": {
+                "event_id": {
+                    "type": "string",
+                    "example": "event-789"
+                },
+                "message": {
+                    "type": "string",
+                    "example": "Event tracked successfully"
+                },
+                "success": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "timestamp": {
+                    "type": "string",
+                    "example": "2023-01-01T00:00:00Z"
+                }
+            }
+        },
+        "api.InventoryItem": {
+            "type": "object",
+            "properties": {
+                "available": {
+                    "type": "integer",
+                    "example": 100
+                },
+                "last_updated": {
+                    "type": "string",
+                    "example": "2023-01-01T00:00:00Z"
+                },
+                "product_id": {
+                    "type": "string",
+                    "example": "product-123"
+                },
+                "reorder_point": {
+                    "type": "integer",
+                    "example": 20
+                },
+                "reorder_quantity": {
+                    "type": "integer",
+                    "example": 50
+                },
+                "reserved": {
+                    "type": "integer",
+                    "example": 5
+                },
+                "total": {
+                    "type": "integer",
+                    "example": 105
+                },
+                "warehouse_id": {
+                    "type": "string",
+                    "example": "warehouse-001"
+                }
+            }
+        },
+        "api.InventoryResponse": {
+            "type": "object",
+            "properties": {
+                "available": {
+                    "type": "integer",
+                    "example": 98
+                },
+                "message": {
+                    "type": "string",
+                    "example": "Inventory reserved successfully"
+                },
+                "product_id": {
+                    "type": "string",
+                    "example": "product-123"
+                },
+                "reservation_id": {
+                    "type": "string",
+                    "example": "res-789"
+                },
+                "reserved": {
+                    "type": "integer",
+                    "example": 7
+                },
+                "success": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "timestamp": {
+                    "type": "string",
+                    "example": "2023-01-01T00:00:00Z"
+                }
+            }
+        },
+        "api.ReleaseInventoryRequest": {
+            "type": "object",
+            "required": [
+                "product_id",
+                "quantity"
+            ],
+            "properties": {
+                "product_id": {
+                    "type": "string",
+                    "example": "product-123"
+                },
+                "quantity": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "example": 2
+                },
+                "reservation_id": {
+                    "type": "string",
+                    "example": "res-789"
+                }
+            }
+        },
+        "api.ReserveInventoryRequest": {
+            "type": "object",
+            "required": [
+                "product_id",
+                "quantity"
+            ],
+            "properties": {
+                "order_id": {
+                    "type": "string",
+                    "example": "order-456"
+                },
+                "product_id": {
+                    "type": "string",
+                    "example": "product-123"
+                },
+                "quantity": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "example": 2
+                },
+                "reservation_id": {
+                    "type": "string",
+                    "example": "res-789"
                 }
             }
         }

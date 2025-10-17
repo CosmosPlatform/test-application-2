@@ -1,14 +1,174 @@
 definitions:
+  api.ErrorResponse:
+    properties:
+      code:
+        example: NOT_FOUND
+        type: string
+      error:
+        example: Element not found
+        type: string
+      message:
+        example: The requested element could not be found
+        type: string
+    type: object
   api.HealthResponse:
     properties:
       status:
         example: ok
         type: string
     type: object
+  api.InventoryEvent:
+    properties:
+      event_type:
+        example: stock_update
+        type: string
+      product_id:
+        example: product-123
+        type: string
+      properties:
+        additionalProperties: true
+        type: object
+      quantity:
+        example: 10
+        type: integer
+      timestamp:
+        example: "2023-01-01T00:00:00Z"
+        type: string
+    required:
+    - event_type
+    type: object
+  api.InventoryEventResponse:
+    properties:
+      event_id:
+        example: event-789
+        type: string
+      message:
+        example: Event tracked successfully
+        type: string
+      success:
+        example: true
+        type: boolean
+      timestamp:
+        example: "2023-01-01T00:00:00Z"
+        type: string
+    type: object
+  api.InventoryItem:
+    properties:
+      available:
+        example: 100
+        type: integer
+      last_updated:
+        example: "2023-01-01T00:00:00Z"
+        type: string
+      product_id:
+        example: product-123
+        type: string
+      reorder_point:
+        example: 20
+        type: integer
+      reorder_quantity:
+        example: 50
+        type: integer
+      reserved:
+        example: 5
+        type: integer
+      total:
+        example: 105
+        type: integer
+      warehouse_id:
+        example: warehouse-001
+        type: string
+    type: object
+  api.InventoryResponse:
+    properties:
+      available:
+        example: 98
+        type: integer
+      message:
+        example: Inventory reserved successfully
+        type: string
+      product_id:
+        example: product-123
+        type: string
+      reservation_id:
+        example: res-789
+        type: string
+      reserved:
+        example: 7
+        type: integer
+      success:
+        example: true
+        type: boolean
+      timestamp:
+        example: "2023-01-01T00:00:00Z"
+        type: string
+    type: object
+  api.ReleaseInventoryRequest:
+    properties:
+      product_id:
+        example: product-123
+        type: string
+      quantity:
+        example: 2
+        minimum: 1
+        type: integer
+      reservation_id:
+        example: res-789
+        type: string
+    required:
+    - product_id
+    - quantity
+    type: object
+  api.ReserveInventoryRequest:
+    properties:
+      order_id:
+        example: order-456
+        type: string
+      product_id:
+        example: product-123
+        type: string
+      quantity:
+        example: 2
+        minimum: 1
+        type: integer
+      reservation_id:
+        example: res-789
+        type: string
+    required:
+    - product_id
+    - quantity
+    type: object
 info:
   contact: {}
   title: Inventory Service API
 paths:
+  /events:
+    post:
+      consumes:
+      - application/json
+      description: Track an inventory-related event (e.g., stock updates, audits,
+        movements)
+      parameters:
+      - description: Inventory event data
+        in: body
+        name: event
+        required: true
+        schema:
+          $ref: '#/definitions/api.InventoryEvent'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.InventoryEventResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+      summary: Track Inventory Event
+      tags:
+      - Inventory
   /health:
     get:
       consumes:
@@ -24,4 +184,97 @@ paths:
       summary: Health Check
       tags:
       - Health
+  /inventory/{productId}:
+    get:
+      consumes:
+      - application/json
+      description: Fetch inventory details for a specific product
+      parameters:
+      - description: Product ID
+        in: path
+        name: productId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.InventoryItem'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+      summary: Get Inventory
+      tags:
+      - Inventory
+  /inventory/release:
+    post:
+      consumes:
+      - application/json
+      description: Release reserved inventory back to available stock
+      parameters:
+      - description: Release inventory request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/api.ReleaseInventoryRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.InventoryResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+      summary: Release Inventory
+      tags:
+      - Inventory
+  /inventory/reserve:
+    post:
+      consumes:
+      - application/json
+      description: Reserve inventory for an order
+      parameters:
+      - description: Reserve inventory request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/api.ReserveInventoryRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.InventoryResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+      summary: Reserve Inventory
+      tags:
+      - Inventory
 swagger: "2.0"

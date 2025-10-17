@@ -14,6 +14,7 @@ func main() {
 	baseGroup := router.Group("/")
 
 	handlers.RegisterHealthCheckRoutes(baseGroup)
+	handlers.RegisterInventoryRoutes(baseGroup)
 	handlers.RegisterSwaggerRoutes(baseGroup)
 
 	router.Run(":8080")
