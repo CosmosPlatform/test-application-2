@@ -32,7 +32,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.HealthResponse"
+                            "$ref": "#/definitions/api.HealthResponse"
                         }
                     }
                 }
@@ -40,7 +40,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "models.HealthResponse": {
+        "api.HealthResponse": {
             "type": "object",
             "properties": {
                 "status": {

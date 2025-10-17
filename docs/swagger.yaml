@@ -1,5 +1,5 @@
 definitions:
-  models.HealthResponse:
+  api.HealthResponse:
     properties:
       status:
         example: ok
@@ -20,7 +20,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.HealthResponse'
+            $ref: '#/definitions/api.HealthResponse'
       summary: Health Check
       tags:
       - Health
