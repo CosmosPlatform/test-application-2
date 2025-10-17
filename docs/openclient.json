@@ -1,0 +1,23 @@
+{
+  "dependencies": {
+    "order-service": {
+      "reasons": [
+        "Get order total for payment processing"
+      ],
+      "endpoints": {
+        "/orders/{id}": {
+          "get": {
+            "reasons": [
+              "Fetch order details before charging"
+            ]
+          },
+          "put": {
+            "reasons": [
+              "Mark order as paid after successful charge"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
