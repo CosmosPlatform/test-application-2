@@ -1,4 +1,49 @@
 definitions:
+  api.AnalyticsEvent:
+    properties:
+      event_type:
+        example: page_view
+        type: string
+      properties:
+        additionalProperties: true
+        type: object
+      session_id:
+        example: session-456
+        type: string
+      timestamp:
+        example: "2023-01-01T00:00:00Z"
+        type: string
+      user_id:
+        example: user-123
+        type: string
+    type: object
+  api.AnalyticsEventResponse:
+    properties:
+      event_id:
+        example: event-789
+        type: string
+      message:
+        example: Event tracked successfully
+        type: string
+      success:
+        example: true
+        type: boolean
+      timestamp:
+        example: "2023-01-01T00:00:00Z"
+        type: string
+    type: object
+  api.ErrorResponse:
+    properties:
+      code:
+        example: NOT_FOUND
+        type: string
+      error:
+        example: Element not found
+        type: string
+      message:
+        example: The requested element could not be found
+        type: string
+    type: object
   api.HealthResponse:
     properties:
       status:
@@ -9,6 +54,32 @@ info:
   contact: {}
   title: Base application API
 paths:
+  /events:
+    post:
+      consumes:
+      - application/json
+      description: Track an analytics event (e.g., page views, clicks, conversions)
+      parameters:
+      - description: Analytics event data
+        in: body
+        name: event
+        required: true
+        schema:
+          $ref: '#/definitions/api.AnalyticsEvent'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.AnalyticsEventResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+      summary: Track Analytics Event
+      tags:
+      - Analytics
   /health:
     get:
       consumes:

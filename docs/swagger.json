@@ -5,6 +5,46 @@
         "contact": {}
     },
     "paths": {
+        "/events": {
+            "post": {
+                "description": "Track an analytics event (e.g., page views, clicks, conversions)",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Analytics"
+                ],
+                "summary": "Track Analytics Event",
+                "parameters": [
+                    {
+                        "description": "Analytics event data",
+                        "name": "event",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/api.AnalyticsEvent"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.AnalyticsEventResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/health": {
             "get": {
                 "description": "Returns the health status of the application",
@@ -30,6 +70,69 @@
         }
     },
     "definitions": {
+        "api.AnalyticsEvent": {
+            "type": "object",
+            "properties": {
+                "event_type": {
+                    "type": "string",
+                    "example": "page_view"
+                },
+                "properties": {
+                    "type": "object",
+                    "additionalProperties": true
+                },
+                "session_id": {
+                    "type": "string",
+                    "example": "session-456"
+                },
+                "timestamp": {
+                    "type": "string",
+                    "example": "2023-01-01T00:00:00Z"
+                },
+                "user_id": {
+                    "type": "string",
+                    "example": "user-123"
+                }
+            }
+        },
+        "api.AnalyticsEventResponse": {
+            "type": "object",
+            "properties": {
+                "event_id": {
+                    "type": "string",
+                    "example": "event-789"
+                },
+                "message": {
+                    "type": "string",
+                    "example": "Event tracked successfully"
+                },
+                "success": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "timestamp": {
+                    "type": "string",
+                    "example": "2023-01-01T00:00:00Z"
+                }
+            }
+        },
+        "api.ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string",
+                    "example": "NOT_FOUND"
+                },
+                "error": {
+                    "type": "string",
+                    "example": "Element not found"
+                },
+                "message": {
+                    "type": "string",
+                    "example": "The requested element could not be found"
+                }
+            }
+        },
         "api.HealthResponse": {
             "type": "object",
             "properties": {
