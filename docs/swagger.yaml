@@ -1,13 +1,46 @@
 definitions:
+  api.ErrorResponse:
+    properties:
+      code:
+        example: NOT_FOUND
+        type: string
+      error:
+        example: Element not found
+        type: string
+      message:
+        example: The requested element could not be found
+        type: string
+    type: object
   api.HealthResponse:
     properties:
       status:
         example: ok
         type: string
     type: object
+  api.Product:
+    properties:
+      category:
+        example: Electronics
+        type: string
+      description:
+        example: A high-quality widget for all your needs
+        type: string
+      id:
+        example: product-123
+        type: string
+      name:
+        example: Premium Widget
+        type: string
+      price:
+        example: 29.99
+        type: number
+      stock:
+        example: 100
+        type: integer
+    type: object
 info:
   contact: {}
-  title: Base application API
+  title: Product Service API
 paths:
   /health:
     get:
@@ -24,4 +57,29 @@ paths:
       summary: Health Check
       tags:
       - Health
+  /products/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Fetch product details by ID
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Product'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+      summary: Get Product
+      tags:
+      - Products
 swagger: "2.0"

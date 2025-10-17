@@ -37,15 +37,99 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/products/{id}": {
+            "get": {
+                "description": "Fetch product details by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Get Product",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Product ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.Product"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/api.ErrorResponse"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
+        "api.ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string",
+                    "example": "NOT_FOUND"
+                },
+                "error": {
+                    "type": "string",
+                    "example": "Element not found"
+                },
+                "message": {
+                    "type": "string",
+                    "example": "The requested element could not be found"
+                }
+            }
+        },
         "api.HealthResponse": {
             "type": "object",
             "properties": {
                 "status": {
                     "type": "string",
                     "example": "ok"
+                }
+            }
+        },
+        "api.Product": {
+            "type": "object",
+            "properties": {
+                "category": {
+                    "type": "string",
+                    "example": "Electronics"
+                },
+                "description": {
+                    "type": "string",
+                    "example": "A high-quality widget for all your needs"
+                },
+                "id": {
+                    "type": "string",
+                    "example": "product-123"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "Premium Widget"
+                },
+                "price": {
+                    "type": "number",
+                    "example": 29.99
+                },
+                "stock": {
+                    "type": "integer",
+                    "example": 100
                 }
             }
         }
@@ -58,7 +142,7 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "",
 	BasePath:         "",
 	Schemes:          []string{},
-	Title:            "Base application API",
+	Title:            "Product Service API",
 	Description:      "",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
