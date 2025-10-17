@@ -1,0 +1,32 @@
+{
+  "dependencies": {
+    "analytics-service": {
+      "reasons": [
+        "Track product views and searches"
+      ],
+      "endpoints": {
+        "/events": {
+          "post": {
+            "reasons": [
+              "Send product-view and product-search events"
+            ]
+          }
+        }
+      }
+    },
+    "inventory-service": {
+      "reasons": [
+        "Inventoryyyyy"
+      ],
+      "endpoints": {
+        "/events": {
+          "post": {
+            "reasons": [
+              "Send product-view and product-search events"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
