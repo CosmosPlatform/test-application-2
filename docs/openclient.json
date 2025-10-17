@@ -1,0 +1,23 @@
+{
+  "dependencies": {
+    "order-service": {
+      "reasons": [
+        "Get shipping details from orders"
+      ],
+      "endpoints": {
+        "/orders/{id}": {
+          "get": {
+            "reasons": [
+              "Retrieve shipping address and item list"
+            ]
+          },
+          "put": {
+            "reasons": [
+              "Update order with shipping status"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
