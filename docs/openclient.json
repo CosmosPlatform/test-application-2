@@ -1,0 +1,18 @@
+{
+  "dependencies": {
+    "analytics-service": {
+      "reasons": [
+        "Track user signup, login, and profile updates"
+      ],
+      "endpoints": {
+        "/events": {
+          "post": {
+            "reasons": [
+              "Send user-created, user-logged-in, and user-updated events"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

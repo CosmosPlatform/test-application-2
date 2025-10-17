@@ -1,9 +1,54 @@
 definitions:
+  api.ErrorResponse:
+    properties:
+      code:
+        example: NOT_FOUND
+        type: string
+      error:
+        example: Element not found
+        type: string
+      message:
+        example: The requested element could not be found
+        type: string
+    type: object
   api.HealthResponse:
     properties:
       status:
         example: ok
         type: string
+    type: object
+  api.User:
+    properties:
+      created_at:
+        example: "2023-01-01T00:00:00Z"
+        type: string
+      email:
+        example: user@example.com
+        type: string
+      first_name:
+        example: John
+        type: string
+      id:
+        example: user-123
+        type: string
+      last_name:
+        example: Doe
+        type: string
+      phone_number:
+        example: "+1234567890"
+        type: string
+      status:
+        example: active
+        type: string
+      updated_at:
+        example: "2023-01-01T00:00:00Z"
+        type: string
+      username:
+        example: johndoe
+        type: string
+      verified:
+        example: true
+        type: boolean
     type: object
 info:
   contact: {}
@@ -24,4 +69,29 @@ paths:
       summary: Health Check
       tags:
       - Health
+  /users/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Fetch user details by ID
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.User'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+      summary: Get User
+      tags:
+      - Users
 swagger: "2.0"
