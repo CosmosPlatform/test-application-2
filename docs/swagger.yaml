@@ -52,7 +52,7 @@ definitions:
     type: object
 info:
   contact: {}
-  title: Base application API
+  title: Analytics Service API
 paths:
   /events:
     post:
