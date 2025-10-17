@@ -1,0 +1,32 @@
+{
+  "dependencies": {
+    "user-service": {
+      "reasons": [
+        "Get user contact information for sending notifications"
+      ],
+      "endpoints": {
+        "/users/{id}": {
+          "get": {
+            "reasons": [
+              "Fetch email or phone number"
+            ]
+          }
+        }
+      }
+    },
+    "order-service": {
+      "reasons": [
+        "Send order-related notifications"
+      ],
+      "endpoints": {
+        "/orders/{id}": {
+          "get": {
+            "reasons": [
+              "Retrieve order details for notification content"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

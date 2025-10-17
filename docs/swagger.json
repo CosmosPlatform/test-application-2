@@ -1,7 +1,7 @@
 {
     "swagger": "2.0",
     "info": {
-        "title": "Base application API",
+        "title": "Notification Service API",
         "contact": {}
     },
     "paths": {
@@ -22,7 +22,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.HealthResponse"
+                            "$ref": "#/definitions/api.HealthResponse"
                         }
                     }
                 }
@@ -30,7 +30,7 @@
         }
     },
     "definitions": {
-        "models.HealthResponse": {
+        "api.HealthResponse": {
             "type": "object",
             "properties": {
                 "status": {
