@@ -47,6 +47,12 @@ definitions:
         example: "2023-01-01T00:00:00Z"
         type: string
     type: object
+  api.OrderCancelRequest:
+    properties:
+      reason:
+        example: Customer requested cancellation
+        type: string
+    type: object
   api.OrderUpdateRequest:
     properties:
       status:
@@ -73,6 +79,44 @@ paths:
       tags:
       - Health
   /orders/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Cancel an order and update its status to cancelled
+      parameters:
+      - description: Order ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Order cancellation data
+        in: body
+        name: cancel
+        required: true
+        schema:
+          $ref: '#/definitions/api.OrderCancelRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Order'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+      summary: Cancel Order
+      tags:
+      - Orders
     get:
       consumes:
       - application/json

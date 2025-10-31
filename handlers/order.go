@@ -39,6 +39,7 @@ func RegisterOrderRoutes(e *gin.RouterGroup) {
 
 	ordersGroup.GET("/:id", getOrderHandler)
 	ordersGroup.PUT("/:id", updateOrderHandler)
+	ordersGroup.DELETE("/:id", cancelOrderHandler)
 }
 
 // @Summary Get Order
@@ -102,6 +103,58 @@ func updateOrderHandler(c *gin.Context) {
 
 	// Update order status
 	order.Status = updateReq.Status
+	order.UpdatedAt = time.Now()
+
+	c.JSON(http.StatusOK, order)
+}
+
+// @Summary Cancel Order
+// @Description Cancel an order and update its status to cancelled
+// @Tags Orders
+// @Accept json
+// @Produce json
+// @Param id path string true "Order ID"
+// @Param cancel body api.OrderCancelRequest true "Order cancellation data"
+// @Success 200 {object} api.Order
+// @Failure 400 {object} api.ErrorResponse
+// @Failure 404 {object} api.ErrorResponse
+// @Failure 409 {object} api.ErrorResponse
+// @Router /orders/{id} [delete]
+func cancelOrderHandler(c *gin.Context) {
+	orderID := c.Param("id")
+
+	order, exists := orders[orderID]
+	if !exists {
+		c.JSON(http.StatusNotFound, api.ErrorResponse{
+			Error:   "Order not found",
+			Code:    "ORDER_NOT_FOUND",
+			Message: "The requested order could not be found",
+		})
+		return
+	}
+
+	// Check if order can be cancelled
+	if order.Status == "shipped" || order.Status == "delivered" {
+		c.JSON(http.StatusConflict, api.ErrorResponse{
+			Error:   "Cannot cancel order",
+			Code:    "INVALID_ORDER_STATE",
+			Message: "Orders that have been shipped or delivered cannot be cancelled",
+		})
+		return
+	}
+
+	var cancelReq api.OrderCancelRequest
+	if err := c.ShouldBindJSON(&cancelReq); err != nil {
+		c.JSON(http.StatusBadRequest, api.ErrorResponse{
+			Error:   "Invalid request body",
+			Code:    "INVALID_REQUEST",
+			Message: "The request body is malformed or missing required fields",
+		})
+		return
+	}
+
+	// Update order status to cancelled
+	order.Status = "cancelled"
 	order.UpdatedAt = time.Now()
 
 	c.JSON(http.StatusOK, order)

@@ -20,6 +20,11 @@ type OrderUpdateRequest struct {
 	Status string `json:"status" example:"paid" description:"New order status"`
 }
 
+// OrderCancelRequest represents the request to cancel an order
+type OrderCancelRequest struct {
+	Reason string `json:"reason" example:"Customer requested cancellation" description:"Reason for cancellation"`
+}
+
 // ErrorResponse represents an error response
 type ErrorResponse struct {
 	Error   string `json:"error" example:"Order not found" description:"Error message"`
