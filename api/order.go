@@ -17,7 +17,8 @@ type Order struct {
 
 // OrderUpdateRequest represents the request to update an order
 type OrderUpdateRequest struct {
-	Status string `json:"status" example:"paid" description:"New order status"`
+	Status   string            `json:"status" example:"paid" description:"New order status"`
+	Metadata map[string]string `json:"metadata,omitempty" example:"source:mobile_app,version:2.1.0" description:"Optional metadata for tracking and analytics"`
 }
 
 // OrderCancelRequest represents the request to cancel an order

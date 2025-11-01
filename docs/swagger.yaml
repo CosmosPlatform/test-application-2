@@ -55,6 +55,13 @@ definitions:
     type: object
   api.OrderUpdateRequest:
     properties:
+      metadata:
+        additionalProperties:
+          type: string
+        example:
+          source: mobile_app
+          version: 2.1.0
+        type: object
       status:
         example: paid
         type: string

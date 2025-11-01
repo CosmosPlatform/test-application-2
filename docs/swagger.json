@@ -255,6 +255,16 @@
         "api.OrderUpdateRequest": {
             "type": "object",
             "properties": {
+                "metadata": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "example": {
+                        "source": "mobile_app",
+                        "version": "2.1.0"
+                    }
+                },
                 "status": {
                     "type": "string",
                     "example": "paid"
