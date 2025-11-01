@@ -40,7 +40,7 @@ definitions:
       status:
         example: pending
         type: string
-      total:
+      total_amount:
         example: 59.98
         type: number
       updated_at:

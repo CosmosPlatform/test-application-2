@@ -243,7 +243,7 @@ const docTemplate = `{
                     "type": "string",
                     "example": "pending"
                 },
-                "total": {
+                "total_amount": {
                     "type": "number",
                     "example": 59.98
                 },
