@@ -122,7 +122,6 @@ definitions:
         example: res-789
         type: string
     required:
-    - more_reason
     - product_id
     - quantity
     - reason

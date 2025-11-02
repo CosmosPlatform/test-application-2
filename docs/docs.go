@@ -370,7 +370,6 @@ const docTemplate = `{
         "api.ReleaseInventoryRequest": {
             "type": "object",
             "required": [
-                "more_reason",
                 "product_id",
                 "quantity",
                 "reason"

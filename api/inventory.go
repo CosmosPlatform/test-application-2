@@ -27,7 +27,7 @@ type ReleaseInventoryRequest struct {
 	ProductID     string `json:"product_id" example:"product-123" description:"Product identifier" binding:"required"`
 	Quantity      int    `json:"quantity" example:"2" description:"Quantity to release" binding:"required,min=1"`
 	Reason        string `json:"reason" example:"order_cancellation" description:"Reason for releasing the inventory" binding:"required"`
-	MoreReason    string `json:"more_reason" example:"customer_request" description:"Additional reason for releasing the inventory" binding:"required"`
+	MoreReason    string `json:"more_reason,omitempty" example:"customer_request" description:"Additional reason for releasing the inventory"`
 	ReservationID string `json:"reservation_id" example:"res-789" description:"Reservation identifier"`
 }
 
