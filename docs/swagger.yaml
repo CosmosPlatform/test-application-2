@@ -143,6 +143,7 @@ definitions:
         example: res-789
         type: string
     required:
+    - order_id
     - product_id
     - quantity
     type: object

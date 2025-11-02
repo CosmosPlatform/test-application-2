@@ -402,6 +402,7 @@ const docTemplate = `{
         "api.ReserveInventoryRequest": {
             "type": "object",
             "required": [
+                "order_id",
                 "product_id",
                 "quantity"
             ],

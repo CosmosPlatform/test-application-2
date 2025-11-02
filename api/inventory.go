@@ -18,8 +18,8 @@ type InventoryItem struct {
 type ReserveInventoryRequest struct {
 	ProductID     string `json:"product_id" example:"product-123" description:"Product identifier" binding:"required"`
 	Quantity      int    `json:"quantity" example:"2" description:"Quantity to reserve" binding:"required,min=1"`
-	OrderID       string `json:"order_id" example:"order-456" description:"Order identifier"`
-	ReservationID string `json:"reservation_id,omitempty" example:"res-789" description:"Optional reservation identifier"`
+	OrderID       string `json:"order_id" example:"order-456" description:"Order identifier" binding:"required"`
+	ReservationID string `json:"reservation_id,omitempty" example:"res-789" description:"Optional reservation identifier to track the reservation"`
 }
 
 // ReleaseInventoryRequest represents a request to release reserved inventory
@@ -27,7 +27,7 @@ type ReleaseInventoryRequest struct {
 	ProductID     string `json:"product_id" example:"product-123" description:"Product identifier" binding:"required"`
 	Quantity      int    `json:"quantity" example:"2" description:"Quantity to release" binding:"required,min=1"`
 	Reason        string `json:"reason" example:"order_cancellation" description:"Reason for releasing the inventory" binding:"required"`
-	MoreReason    string `json:"more_reason,omitempty" example:"customer_request" description:"Additional reason for releasing the inventory"`
+	MoreReason    string `json:"more_reason,omitempty" example:"customer_request" description:"Additional reason for releasing the inventory yuhuuu"`
 	ReservationID string `json:"reservation_id" example:"res-789" description:"Reservation identifier"`
 }
 
