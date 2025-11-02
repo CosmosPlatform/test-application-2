@@ -251,7 +251,8 @@ const docTemplate = `{
         "api.InventoryEvent": {
             "type": "object",
             "required": [
-                "event_type"
+                "event_type",
+                "product_id"
             ],
             "properties": {
                 "event_type": {

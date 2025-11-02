@@ -36,6 +36,7 @@ definitions:
         type: string
     required:
     - event_type
+    - product_id
     type: object
   api.InventoryEventResponse:
     properties:

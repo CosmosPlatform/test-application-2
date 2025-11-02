@@ -45,7 +45,7 @@ type InventoryResponse struct {
 // InventoryEvent represents an inventory event to be tracked
 type InventoryEvent struct {
 	EventType  string                 `json:"event_type" example:"stock_update" description:"Type of inventory event" binding:"required"`
-	ProductID  string                 `json:"product_id" example:"product-123" description:"Product identifier"`
+	ProductID  string                 `json:"product_id" example:"product-123" description:"Product identifier" binding:"required"`
 	Quantity   int                    `json:"quantity" example:"10" description:"Quantity involved in the event"`
 	Timestamp  time.Time              `json:"timestamp" example:"2023-01-01T00:00:00Z" description:"Event timestamp"`
 	Properties map[string]interface{} `json:"properties,omitempty" description:"Additional event properties"`
