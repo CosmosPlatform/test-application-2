@@ -19,6 +19,9 @@ definitions:
     type: object
   api.Order:
     properties:
+      additional_info:
+        example: Gift wrap requested
+        type: string
       created_at:
         example: "2023-01-01T00:00:00Z"
         type: string
