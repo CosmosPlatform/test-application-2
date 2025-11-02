@@ -105,6 +105,9 @@ definitions:
     type: object
   api.ReleaseInventoryRequest:
     properties:
+      more_reason:
+        example: customer_request
+        type: string
       product_id:
         example: product-123
         type: string
@@ -119,6 +122,7 @@ definitions:
         example: res-789
         type: string
     required:
+    - more_reason
     - product_id
     - quantity
     - reason
