@@ -371,7 +371,8 @@ const docTemplate = `{
             "type": "object",
             "required": [
                 "product_id",
-                "quantity"
+                "quantity",
+                "reason"
             ],
             "properties": {
                 "product_id": {
@@ -382,6 +383,10 @@ const docTemplate = `{
                     "type": "integer",
                     "minimum": 1,
                     "example": 2
+                },
+                "reason": {
+                    "type": "string",
+                    "example": "order_cancellation"
                 },
                 "reservation_id": {
                     "type": "string",

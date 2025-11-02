@@ -112,12 +112,16 @@ definitions:
         example: 2
         minimum: 1
         type: integer
+      reason:
+        example: order_cancellation
+        type: string
       reservation_id:
         example: res-789
         type: string
     required:
     - product_id
     - quantity
+    - reason
     type: object
   api.ReserveInventoryRequest:
     properties:
