@@ -51,6 +51,7 @@ const docTemplate = `{
                     "Orders"
                 ],
                 "summary": "Get Order",
+                "deprecated": true,
                 "parameters": [
                     {
                         "type": "string",

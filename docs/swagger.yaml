@@ -127,6 +127,7 @@ paths:
     get:
       consumes:
       - application/json
+      deprecated: true
       description: Fetch order details before charging
       parameters:
       - description: Order ID
