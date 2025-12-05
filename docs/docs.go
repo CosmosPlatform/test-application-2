@@ -227,6 +227,10 @@ const docTemplate = `{
                     "type": "string",
                     "example": "customer-456"
                 },
+                "demo_attribute": {
+                    "type": "string",
+                    "example": "demo-value"
+                },
                 "id": {
                     "type": "string",
                     "example": "order-123"
