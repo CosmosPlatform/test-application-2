@@ -51,7 +51,6 @@ const docTemplate = `{
                     "Orders"
                 ],
                 "summary": "Get Order",
-                "deprecated": true,
                 "parameters": [
                     {
                         "type": "string",
@@ -88,7 +87,6 @@ const docTemplate = `{
                     "Orders"
                 ],
                 "summary": "Update Order",
-                "deprecated": true,
                 "parameters": [
                     {
                         "type": "string",
@@ -217,6 +215,10 @@ const docTemplate = `{
         "api.Order": {
             "type": "object",
             "properties": {
+                "additional_info": {
+                    "type": "string",
+                    "example": "Gift wrap requested"
+                },
                 "created_at": {
                     "type": "string",
                     "example": "2023-01-01T00:00:00Z"

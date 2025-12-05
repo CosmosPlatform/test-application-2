@@ -19,6 +19,9 @@ definitions:
     type: object
   api.Order:
     properties:
+      additional_info:
+        example: Gift wrap requested
+        type: string
       created_at:
         example: "2023-01-01T00:00:00Z"
         type: string
@@ -127,7 +130,6 @@ paths:
     get:
       consumes:
       - application/json
-      deprecated: true
       description: Fetch order details before charging
       parameters:
       - description: Order ID
@@ -152,7 +154,6 @@ paths:
     put:
       consumes:
       - application/json
-      deprecated: true
       description: Mark order as paid after successful charge
       parameters:
       - description: Order ID

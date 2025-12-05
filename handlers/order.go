@@ -50,7 +50,6 @@ func RegisterOrderRoutes(e *gin.RouterGroup) {
 // @Param id path string true "Order ID"
 // @Success 200 {object} api.Order
 // @Failure 404 {object} api.ErrorResponse
-// @Deprecated
 // @Router /orders/{id} [get]
 func getOrderHandler(c *gin.Context) {
 	orderID := c.Param("id")
@@ -78,7 +77,6 @@ func getOrderHandler(c *gin.Context) {
 // @Success 200 {object} api.Order
 // @Failure 400 {object} api.ErrorResponse
 // @Failure 404 {object} api.ErrorResponse
-// @Deprecated
 // @Router /orders/{id} [put]
 func updateOrderHandler(c *gin.Context) {
 	orderID := c.Param("id")
