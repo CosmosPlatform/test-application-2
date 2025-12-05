@@ -87,6 +87,7 @@ const docTemplate = `{
                     "Orders"
                 ],
                 "summary": "Update Order",
+                "deprecated": true,
                 "parameters": [
                     {
                         "type": "string",

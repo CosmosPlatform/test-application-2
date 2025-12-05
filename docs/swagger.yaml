@@ -151,6 +151,7 @@ paths:
     put:
       consumes:
       - application/json
+      deprecated: true
       description: Mark order as paid after successful charge
       parameters:
       - description: Order ID
