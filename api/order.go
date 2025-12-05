@@ -11,15 +11,15 @@ type Order struct {
 	Price       float64   `json:"price" example:"29.99" description:"Price per item"`
 	Total       float64   `json:"total_amount" example:"59.98" description:"Total order amount"`
 	Status      string    `json:"status" example:"pending" description:"Order status (pending, paid, shipped, delivered)"`
-	Additional  string    `json:"additional_info,omitempty" example:"Gift wrap requested" description:"Optional additional information about the order"`
 	CreatedAt   time.Time `json:"created_at" example:"2023-01-01T00:00:00Z" description:"Order creation timestamp"`
 	UpdatedAt   time.Time `json:"updated_at" example:"2023-01-01T00:00:00Z" description:"Last update timestamp"`
 }
 
 // OrderUpdateRequest represents the request to update an order
 type OrderUpdateRequest struct {
-	Status   string            `json:"status" example:"paid" description:"New order status"`
-	Metadata map[string]string `json:"metadata,omitempty" example:"source:mobile_app,version:2.1.0" description:"Optional metadata for tracking and analytics"`
+	Status        string            `json:"status" example:"paid" description:"New order status"`
+	Metadata      map[string]string `json:"metadata,omitempty" example:"source:mobile_app,version:2.1.0" description:"Optional metadata for tracking and analytics"`
+	DemoAttribute string            `json:"demo_attribute" example:"demo-value" description:"Demo attribute for TPP demo"`
 }
 
 // OrderCancelRequest represents the request to cancel an order

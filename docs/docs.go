@@ -215,10 +215,6 @@ const docTemplate = `{
         "api.Order": {
             "type": "object",
             "properties": {
-                "additional_info": {
-                    "type": "string",
-                    "example": "Gift wrap requested"
-                },
                 "created_at": {
                     "type": "string",
                     "example": "2023-01-01T00:00:00Z"
@@ -269,6 +265,10 @@ const docTemplate = `{
         "api.OrderUpdateRequest": {
             "type": "object",
             "properties": {
+                "demo_attribute": {
+                    "type": "string",
+                    "example": "demo-value"
+                },
                 "metadata": {
                     "type": "object",
                     "additionalProperties": {
