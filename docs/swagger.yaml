@@ -28,9 +28,6 @@ definitions:
       customer_id:
         example: customer-456
         type: string
-      demo_attribute:
-        example: demo-value
-        type: string
       id:
         example: order-123
         type: string
